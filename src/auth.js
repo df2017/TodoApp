@@ -9,7 +9,7 @@ document.getElementById("login").addEventListener("click", () => {
         password: passw.value
     };
 
-    fetch('http://127.0.0.1:5000/auth', {
+    fetch('https://todoappd.herokuapp.com/auth', {
         headers: {
             "Content-Type": "application/json"
           },
