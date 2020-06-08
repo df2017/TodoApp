@@ -12,7 +12,10 @@ window.addEventListener("load", () => {
     window.location.href = "/login";
   }
 })
-
+const url = (param) => {
+  return `http://localhost:5000/${param}`
+}
+console.log(url('tasks'));
 function dateFull() {
 
   let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -96,11 +99,9 @@ let tableTask = (tasks) => {
         formUpdate.appendChild(groupButton);
         groupButton.appendChild(buttonSave);
         groupButton.appendChild(buttonCancel);
-
         tdTasks.appendChild(formUpdate);
 
       });
-
 
       tdActions.appendChild(buttonDone);
       tdActions.appendChild(buttonUpdate);
@@ -123,7 +124,7 @@ let tableTask = (tasks) => {
 
 let loadPage = () => {
 
-  fetch("http://localhost:8000/tasks", {
+  fetch(url("tasks"), {
     headers: {
       "Content-Type": "application/json",
       "Authorization": "Bearer " + getToken()
@@ -137,6 +138,7 @@ let loadPage = () => {
       tableTask(data)
     }).catch(error =>  {
       window.location.href = "/login";
+      console.log(error)
     })
 };
 loadPage();
@@ -148,7 +150,7 @@ function addTask() {
     descripcion: inputTask.value,
   };
 
-  fetch("http://localhost:8000/tasks", {
+  fetch(url("tasks"), {
     headers: {
       "Content-Type": "application/json",
       "Authorization": "Bearer " + getToken()
@@ -174,7 +176,7 @@ function statusChange(id) {
     estado: "Complete",
   };
 
-  fetch(`http://localhost:8000/tasks/${id}`, {
+  fetch(`${url("tasks")}/${id}`, {
     headers: {
       "Content-Type": "application/json",
       "Authorization": "Bearer " + getToken()
@@ -198,7 +200,7 @@ function updateTask(id, text) {
     descripcion: text,
   };
 
-  fetch(`http://localhost:8000/tasks/${id}`, {
+  fetch(`${url("tasks")}/${id}`, {
     headers: {
       "Content-Type": "application/json",
       "Authorization": "Bearer " + getToken()
@@ -219,7 +221,7 @@ function updateTask(id, text) {
 /**************************** DELETE TASK ****************************/
 
 function deleteTask(id) {
-  fetch(`http://localhost:8000/tasks/${id}`, {
+  fetch(`${url("tasks")}/${id}`, {
     headers: {
       "Content-Type": "application/json",
       "Authorization": "Bearer " + getToken()

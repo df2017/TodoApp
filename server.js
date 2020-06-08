@@ -38,7 +38,7 @@ app.put("/tasks/:id", middleware.autenticado, tareaController.actualizarTareas);
 app.delete("/tasks/:id", middleware.autenticado, tareaController.eliminarTarea);
 
 // server config.
-const port = 8000;
+const port = 5000;
 
 app.listen(port, () => {
   console.log(`App todo iniciada en el puerto ${port}`);
