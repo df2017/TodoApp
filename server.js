@@ -9,32 +9,16 @@ const autenticacionController = require('./controllers/autenticacionController')
 const middleware = require('./middlewares/middlewares');
 const path = require('path');
 
-
-app.use(express.static(path.join(__dirname, 'public/src')))
-
 // app config
 app.use(bodyParser.json());
 app.use(cors());
 
-// rutas
-app.get('/login', (req, res) => {
-  res.sendFile(path.join(__dirname + '/public/login.html'));
-});
+app.post("/api/v1/auth", autenticacionController.login);
 
-app.get('/register', (req, res) => {
-  res.sendFile(path.join(__dirname + '/public/login.html'));
-});
-
-app.get('/home', (req, res) => {
-  res.sendFile(path.join(__dirname + '/public/index.html'));
-});
-
-app.post("/auth", autenticacionController.login);
-
-app.get("/tasks", middleware.autenticado, tareaController.obtenerTareas);
-app.post("/tasks", middleware.autenticado, tareaController.guardarTarea);
-app.put("/tasks/:id", middleware.autenticado, tareaController.actualizarTareas);
-app.delete("/tasks/:id", middleware.autenticado, tareaController.eliminarTarea);
+app.get("/api/v1/tasks", middleware.autenticado, tareaController.obtenerTareas);
+app.post("/api/v1/tasks", middleware.autenticado, tareaController.guardarTarea);
+app.put("/api/v1/tasks/:id", middleware.autenticado, tareaController.actualizarTareas);
+app.delete("/api/v1/tasks/:id", middleware.autenticado, tareaController.eliminarTarea);
 
 // server config.
 const port = 5000;
