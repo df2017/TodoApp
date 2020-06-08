@@ -13,7 +13,7 @@ window.addEventListener("load", () => {
   }
 })
 const url = (param) => {
-  return `https://todoappd.herokuapp.com/${param}`
+  return `http://127.0.0.1:5000/${param}`
 }
 console.log(url('tasks'));
 function dateFull() {
