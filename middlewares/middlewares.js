@@ -16,7 +16,7 @@ function autenticado(req, res, next) {
       
     } else {
 
-      req.body.user = decoded.user;
+      req.userInfo = decoded;
       next();
     }
   })

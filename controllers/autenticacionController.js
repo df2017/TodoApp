@@ -7,35 +7,39 @@ const users = [{
     "password": "123456"
 }];
 
-const tokenid = [];
-
 function login(req, res) {
 
-    let user = users.find((x) => x.user == req.body.user.toLowerCase());
+    let username = users.find((x) => x.user == req.body.user);
 
-    if (req.body.user === user.user && req.body.password === user.password) {
+    if (req.body.user === username.user && req.body.password === username.password) {
         const payload = {
             user: req.body.user
         };
-        const token = jwt.sign(payload, 'QWsaldpoicpwo20sd7890xbn223SsadcA', {
-            expiresIn: 1440
-        });
-        tokenid.push(token)
-        res.send({
-            mensaje: 'Autenticación correcta',
-            token: token
-        });
-        return;
+
+        jwt.sign(payload, 'QWsaldpoicpwo20sd7890xbn223SsadcA', (error, token) => {
+
+            if(error) {
+                res.status(500).send("No es posible iniciar sesion.");
+                return;
+            }
+    
+            let resultado = {
+                usuario: req.body.user,
+                token: token
+            };
+    
+            res.send(resultado);
+    
+        })
+    
     } else {
         res.send({
             mensaje: "Usuario o contraseña incorrectos"
         })
-        return;
     }
 
 };
 
 module.exports = {
     login: login,
-    tokenid: tokenid,
 }
